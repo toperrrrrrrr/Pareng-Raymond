@@ -1,6 +1,10 @@
 import express from "express";
 import { getIdNotes, createNotes, deleteAllNotes } from "./database.js";
 
+const port = 8080;
+
+app.set("view engine", "ejs")
+
 const app = express();
 app.use(express.json()); //This is responsible for getting access from the JSON file you send through the BODY of your website.
 
@@ -10,6 +14,7 @@ app.get("/auth/notes", async (req, res) => {
    const notes = await getIdNotes(1);
    res.send(notes);
 });
+
 //The function below is more suitable on accessing specific ID.
 
 //getting one data using ID parameter
@@ -29,7 +34,7 @@ app.post("/auth/notes", async (req, res) => {
 
 
 //Trying to delete all files
-app.post("/auth/notes/delete", (req, res) => {
+app.delete("/auth/notes/delete", (req, res) => {
     const deletee = deleteAllNotes();
     res.send(deletee);
  });
@@ -42,6 +47,10 @@ app.use((err, req, res, next) => {
    res.status(500).send("Something broke!");
 });
 
-app.listen(8008, () => {
-   console.log("Server is running on port 8080");
+app.use((req, res, next) => {
+   res.status(404).send("Sorry can't find that!")
+ })
+
+app.listen(port, () => {
+   console.log(`Server is running on port ${port}.`);
 });
