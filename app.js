@@ -1,48 +1,32 @@
-import express from "express";
-import { getIdNotes, createNotes, deleteAllNotes } from "./database.js";
-
+const express = require("express");
 const port = 8080;
-
 const app = express();
+const notes = require("./routes/notes");
+
+
 app.use(express.json()); //This is responsible for getting access from the JSON file you send through the BODY of your website.
+app.use(express.static("public")); // Connection to my public assets. This includes HTMLs.
+app.use(express.urlencoded({ extended: true })); // This is for accessing the  URL? not so sure.
 app.set("view engine", "ejs");
-app.use(express.static("public")); // Connection to my public assets
 
-// This will make a request on your DATABASE.JS to get the note with the ID 1.
-app.get("/notes", async (req, res) => {
-   const notes = await getIdNotes(1);
-   res.send(notes);
+//Checking Connection
+
+app.listen(port, () => {
+   console.log(`Server is running on port ${port}.`);
 });
 
-app.get("/test", async (req, res) => {
-   res.send("testing");
-});
+//Routes
+app.use("/notes", notes);
 
-//The function below is more suitable on accessing specific ID.
-
-//getting one data using ID parameter
-app.get("/notes/:id", async (req, res) => {
-   //this will get the ID from the database through the "RES" argument.
-   const noteId = req.params.id;
-   const notes = await getIdNotes(noteId);
-   res.send(notes);
-});
-
-app.post("/notes", async (req, res) => {
-   const { title, contents } = req.body;
-   const noterist = await createNotes(title, contents);
-   res.status(201).send(noterist);
-});
-
-//Trying to delete all files
-app.delete("/notes/delete", (req, res) => {
-   const deletee = deleteAllNotes();
-   res.send(deletee);
-});
-
+//Main page : index
 app.get("/", (req, res) => {
-   console.log("Website Loaded");
-   res.render("index", { nameasd: "Noriel" });
+   console.log("Main Page Loaded");
+   res.render("index", { name: "Noriel" });
+});
+
+//playing with forms
+app.get("/new", (req, res) => {
+   res.render("new/users", { firstName: "placeholder" });
 });
 
 // Staple functions for checking connections and making sure there is no error with the Server
@@ -53,8 +37,4 @@ app.use((err, req, res, next) => {
 
 app.use((req, res, next) => {
    res.status(404).render("404"); //calls the 404.ejs on the views folder
-});
-
-app.listen(port, () => {
-   console.log(`Server is running on port ${port}.`);
 });
