@@ -34,7 +34,7 @@ async function createNotes(title, contents) {
 }
 
 // this is for saving new data whenever there is something that was saved to the document.
-// const results = await createNotes("Lorem ipsum", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium ratione quidem quo reprehenderit vel repellat adipisci doloribus voluptates, quos dolore tempora non eaque at, dolores ab possimus minima perspiciatis necessitatibus");
-// console.log(results);
+const results =  createNotes("Lorem ipsum", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium ratione quidem quo reprehenderit vel repellat adipisci doloribus voluptates, quos dolore tempora non eaque at, dolores ab possimus minima perspiciatis necessitatibus");
+console.log(results);
 
 module.exports = { deleteAllNotes, getIdNotes, createNotes };

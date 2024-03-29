@@ -1,10 +1,17 @@
 const express = require("express");
 const router = express.Router();
 var tools = require("../database");
-const { render } = require("ejs");
 
-logger();
-console.log(tools);
+
+// logger();
+// console.log(tools);
+
+
+// //this is for getting the url
+// function logger(req, res, next) {
+//    console.log(req.originalUrl);
+//    next();
+// }
 
 // This will make a request on your DATABASE.JS to get the note with the ID 1.
 router.get("/", (req, res) => {
@@ -30,11 +37,5 @@ router.get("/:id", (req, res) => {
    res.send(notes + " as");
    console.log("proof that this is running");
 });
-
-//this is for getting the url
-function logger(req, res, next) {
-   console.log(req.originalUrl);
-   next();
-}
 
 module.exports = router;
