@@ -1,8 +1,8 @@
 const express = require("express");
 const port = 8080;
 const app = express();
-const notes = require("./routes/notes");
-
+// const notes = require("./routes/notes");
+// var tools = require("./database");
 
 app.use(express.json()); //This is responsible for getting access from the JSON file you send through the BODY of your website.
 app.use(express.static("public")); // Connection to my public assets. This includes HTMLs.
@@ -16,18 +16,19 @@ app.listen(port, () => {
 });
 
 //Routes
-app.use("/notes", notes);
-
-//Main page : index
+// app.use("/notes", notes);
+ 
+//Main page :  0201
 app.get("/", (req, res) => {
    console.log("Main Page Loaded");
    res.render("index", { name: "Noriel" });
 });
 
-//playing with forms
-app.get("/new", (req, res) => {
-   res.render("new/users", { firstName: "placeholder" });
-});
+
+// //playing with forms
+// app.get("/new", (req, res) => {
+//    res.render("new/users", { firstName: "placeholder" });
+// });
 
 // Staple functions for checking connections and making sure there is no error with the Server
 app.use((err, req, res, next) => {
